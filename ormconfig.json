@@ -1,0 +1,28 @@
+[
+  {
+    "name": "default",
+    "driver": {
+      "type": "mysql",
+      "host": "",
+      "port": 3306,
+      "username": "DennisBot",
+      "password": "",
+      "database": "DennisBotDev"
+    },
+    "autoSchemaSync": true,
+    "entities": [
+      "src/server/entity/*.js"
+    ],
+    "subscribers": [
+      "src/server/subscriber/*.js,"
+    ],
+    "migrations": [
+      "src/server/migration/*.js"
+    ],
+    "cli": {
+      "entitiesDir": "src/server/entity",
+      "migrationsDir": "src/server/migration",
+      "subscribersDir": "src/server/subscriber"
+    }
+  }
+]
