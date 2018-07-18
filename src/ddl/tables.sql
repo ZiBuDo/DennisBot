@@ -1,5 +1,6 @@
-CREATE TABLE Users (name VARCHAR(200) not null primary key) CHARACTER SET utf32;
+CREATE TABLE Users (name VARCHAR(200) not null primary key, source VARCHAR(200) not null) CHARACTER SET utf32;
 CREATE INDEX user_names ON Users (name);
+CREATE UNIQUE INDEX unique_source ON Users (source);
 
 CREATE TABLE Actions (name VARCHAR(200) not null primary key, type VARCHAR(20) not null, contents JSON, user VARCHAR(200) not null) CHARACTER SET utf32;
 CREATE UNIQUE INDEX action_name_index ON Actions (name);
