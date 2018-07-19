@@ -26,16 +26,16 @@ const UserSerivce = (function() {
         const userRepo = getEntityManager().getRepository(User);
         // return created user
         // ensure unique name
-        let newUserName = generateUniqueUserName(userConfig.name, 0);
+        let newUserName = await generateUniqueUserName(userConfig.name, 0);
         // need to register: ask for name
         let newUser = userRepo.create({ name: newUserName, source: userConfig.id });
-        getEntityManager().persist(newUser);
+        await getEntityManager().persist(newUser);
 
         return newUser;
-        function generateUniqueUserName(name: String, counter: number): String {
+        async function generateUniqueUserName(name: String, counter: number): String {
             let unique = counter ? name + (counter + '') : name;
-            if (findByName(unique)) {
-                return generateUniqueUserName(name, ++counter);
+            if (await findByName(unique)) {
+                return await generateUniqueUserName(name, ++counter);
             }
             return unique;
         }
@@ -43,11 +43,11 @@ const UserSerivce = (function() {
 
     async function getExisting(userConfig: any): Promise<User> {
         // check if user exists by source, then by name as fallback
-        let exists = findBySource(userConfig.source);
+        let exists = await findBySource(userConfig.source);
         if (exists) {
             return exists;
         } else {
-            exists = findByName(userConfig.name);
+            exists = await findByName(userConfig.name);
             if (exists) {
                 return exists;
             }
