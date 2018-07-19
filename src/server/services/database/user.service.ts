@@ -2,19 +2,21 @@
 import { getEntityManager } from 'typeorm';
 import { User } from '../../entity/database/user';
 
-const userRepo = getEntityManager().getRepository(User);
 
 export async function findBySource(source: String) {
+    const userRepo = getEntityManager().getRepository(User);
     // see if we can find user
     return await userRepo.findOne({ source: source });
 }
 
 export async function findByName(name: String) {
+    const userRepo = getEntityManager().getRepository(User);
     // see if we can find user
     return await userRepo.findOne({ name: name });
 }
 
 export async function create(userConfig: any) {
+    const userRepo = getEntityManager().getRepository(User);
     // return created user
     // ensure unique name
     let newUserName = generateUniqueUserName(userConfig.name, 0);
