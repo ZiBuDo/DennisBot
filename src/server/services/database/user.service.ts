@@ -28,7 +28,7 @@ const UserSerivce = (function() {
         // ensure unique name
         let newUserName = await generateUniqueUserName(userConfig.name, 0);
         // need to register: ask for name
-        let newUser = userRepo.create({ name: newUserName, source: userConfig.id });
+        let newUser = userRepo.create({ name: newUserName, source: userConfig.source });
         await getEntityManager().persist(newUser);
 
         return newUser;
