@@ -1,6 +1,5 @@
-import {getEntityManager} from 'typeorm';
 import {User} from '../entity/database/user';
-import {getExisting, create} from '../services/database/user.service';
+import UserService from '../services/database/user.service';
 
 /**
  * Message Endpoint
@@ -16,11 +15,11 @@ export default async function message(session: any) {
         source: session.message.user.id,
         name: session.message.user.name
     };
-    let user = await getExisting(userConfig);
+    let user = await UserService.getExisting(userConfig);
     // see if we can find user
     if (!user) {
         // need to register: ask for name
-        user = await create(userConfig);
+        user = await UserService.create(userConfig);
         session.send('Nice to meet you ' + user.name);
         flow(session, user);
     }else {
