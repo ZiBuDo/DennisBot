@@ -32,7 +32,7 @@ const UserSerivce = (function() {
         await getEntityManager().persist(newUser);
 
         return newUser;
-        async function generateUniqueUserName(name: String, counter: number): String {
+        async function generateUniqueUserName(name: String, counter: number): Promise<String> {
             let unique = counter ? name + (counter + '') : name;
             if (await findByName(unique)) {
                 return await generateUniqueUserName(name, ++counter);
