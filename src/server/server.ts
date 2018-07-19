@@ -17,8 +17,8 @@ let builder = require('botbuilder');
 // note that its not active database connection
 // TypeORM creates you connection pull to uses connections from pull on your requests
 
-let keyPath = fs.readFileSync('keyPath.txt').toString();
-let certPath = fs.readFileSync('certPath.txt').toString();
+let keyPath = fs.readFileSync(path.join(__dirname, '/src/server/keyPath.txt')).toString();
+let certPath = fs.readFileSync(path.join(__dirname, '/src/server/certPath.txt')).toString();
 let https_options = {
     key: fs.readFileSync(keyPath).toString(),
     certificate: fs.readFileSync(certPath).toString()
@@ -33,7 +33,7 @@ console.log('Starting Dennis Bot');
 
 function start() {
     console.log('Reading App Id From Local File System');
-    fs.readFile(path.join(__dirname, '../apikey.txt'), 'utf8', (e, data) => {
+    fs.readFile(path.join(__dirname, '/src/server/apikey.txt'), 'utf8', (e, data) => {
         if (e) {
             console.log('Failed to read App Id from local file system.', e);
         }
