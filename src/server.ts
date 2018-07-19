@@ -1,14 +1,14 @@
 import 'reflect-metadata';
 import { createConnection } from 'typeorm';
-import { Request, Response } from 'express';
-import * as express from 'express';
-import * as bodyParser from 'body-parser';
+// import { Request, Response } from 'express';
+// import * as express from 'express';
+// import * as bodyParser from 'body-parser';
 import message from './server/controller/message';
-import call from './server/controller/call';
+// import call from './server/controller/call';
 import * as fs from 'fs';
 import * as path from 'path';
 import {createServer} from 'restify';
-import {createServer as httpsCreateServer } from 'https';
+// import {createServer as httpsCreateServer } from 'https';
 let builder = require('botbuilder');
 
 
@@ -24,10 +24,10 @@ let https_options = {
     certificate: fs.readFileSync(certPath).toString()
 };
 
-let express_credentials = {
-    key: https_options.key,
-    cert: https_options.certificate
-};
+// let express_credentials = {
+//     key: https_options.key,
+//     cert: https_options.certificate
+// };
 
 console.log('Starting Dennis Bot');
 
@@ -42,30 +42,30 @@ function start() {
         createConnection().then(async connection => {
             console.log('Successfully started TypeOrm and connected to database with connection:', connection.name, connection.driver);
             // create express app
-            console.log('Creating Express app');
-            const app = express();
-            app.use(bodyParser.json());
+            // console.log('Creating Express app');
+            // const app = express();
+            // app.use(bodyParser.json());
 
-            // register 2 routes here and its to make calls or message the best bot
-            console.log('Registering messaging endpoint');
-            app.all('/messages', (request: Request, response: Response, next: Function) => {
-                message(request, response)
-                    .then(() => next)
-                    .catch((err: any) => next(err));
-            });
-            console.log('Registering calls endpoint');
-            app.all('/calls', (request: Request, response: Response, next: Function) => {
-                call(request, response)
-                    .then(() => next)
-                    .catch((err: any) => next(err));
-            });
-            console.log('Registering end points complete, starting listening');
-            // run app
-            let port = 3001;
-            let httpsServer = httpsCreateServer(express_credentials, app);
-            httpsServer.listen(port);
+            // // register 2 routes here and its to make calls or message the best bot
+            // console.log('Registering messaging endpoint');
+            // app.all('/messages', (request: Request, response: Response, next: Function) => {
+            //     message(request, response)
+            //         .then(() => next)
+            //         .catch((err: any) => next(err));
+            // });
+            // console.log('Registering calls endpoint');
+            // app.all('/calls', (request: Request, response: Response, next: Function) => {
+            //     call(request, response)
+            //         .then(() => next)
+            //         .catch((err: any) => next(err));
+            // });
+            // console.log('Registering end points complete, starting listening');
+            // // run app
+            // let port = 3001;
+            // let httpsServer = httpsCreateServer(express_credentials, app);
+            // httpsServer.listen(port);
 
-            console.log('Dennis Api is up and running on port: ', port);
+            // console.log('Dennis Api is up and running on port: ', port);
             console.log('Start restify skype portion');
 
             let serverPort = 3000;
@@ -86,9 +86,15 @@ function start() {
             server.post('/messages', connector.listen());
 
             // Receive messages from the user and respond by echoing each message back (prefixed with 'You said:')
-            new builder.UniversalBot(connector, function (session: any) {
-                session.send('You said: %s', session.message.text);
+            let bot = new builder.UniversalBot(connector, function (session: any) {
+                message(session);
             });
+
+            // Do not persist userData
+            bot.set(`persistUserData`, false);
+
+            // Do not persist conversationData
+            bot.set(`persistConversationData`, false);
 
 
         }).catch(error => console.log('TypeORM connection error: ', error));

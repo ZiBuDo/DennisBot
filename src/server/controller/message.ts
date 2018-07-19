@@ -1,16 +1,24 @@
-import {Request, Response} from 'express';
+import {getEntityManager} from 'typeorm';
+import {User} from '../entity/database/user';
 
 /**
  * Message Endpoint
  */
-export default async function message(request: Request, response: Response) {
+export default async function message(session: any) {
+    // determine who it is, if unknown then prompt for user
+    // once we know who it is then determine if this is a command
+    // if a command then go to command flow
+    // if not a command then determine if we are triggered
+    // if triggered then go to trigger + action flow
+    console.log(JSON.stringify(session));
+    const userRepo = getEntityManager().getRepository(User);
 
-    // // get a post repository to perform operations with post
-    // const postRepository = getEntityManager().getRepository(Game);
+    // // see if we can find user
+    // const user = await userRepo.findOne({source: ''});
+    // if (!user) {
+    //     // need to register
 
-    // // load a post by a given post id
-    // const posts = await postRepository.find();
-
-    // // return loaded posts
-    // response.send(posts);
+    // }else {
+    //     // parse into command or trigger if neither do nothing
+    // }
 }
