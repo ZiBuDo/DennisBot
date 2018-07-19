@@ -49,7 +49,7 @@
   "scripts": {
     "build": "tsc -p src/",
     "build:watch": "tsc -p src/ -w",
-    "start": "npm run serve",
+    "start": "npm run build && npm run serve",
     "lint": "tslint ./src/**/*.ts -t verbose",
     "serve": "node ./src/server.js"
   },
