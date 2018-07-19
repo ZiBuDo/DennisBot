@@ -51,7 +51,7 @@
     "build:watch": "tsc -p src/ -w",
     "start": "npm run build && npm run serve",
     "lint": "tslint ./src/**/*.ts -t verbose",
-    "serve": "node ./src/server.js"
+    "serve": "node ./src/server/server.js"
   },
   "repository": {
     "type": "git",
@@ -64,7 +64,7 @@
   "author": "ZiBuDo",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/ZiBuDo//DennisBot/issues"
+    "url": "https://github.com/ZiBuDo/DennisBot/issues"
   },
-  "homepage": "https://github.com/ZiBuDo//DennisBot#readme"
+  "homepage": "https://github.com/ZiBuDo/DennisBot#readme"
 }

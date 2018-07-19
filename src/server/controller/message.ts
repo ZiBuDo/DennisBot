@@ -16,9 +16,17 @@ export default async function message(session: any) {
     const user = await userRepo.findOne({source: session.message.user.id});
     if (!user) {
         // need to register: ask for name
-        userRepo.create({name: session.message.user.name, source: session.message.user.id});
+        let newUser = userRepo.create({name: session.message.user.name, source: session.message.user.id});
+        getEntityManager().persist(newUser);
         session.send('Nice to meet you ' + session.message.user.name);
+        flow(session, newUser);
     }else {
         // parse into command or trigger if neither do nothing
+        flow(session, user);
     }
+}
+
+
+function flow(session: any, user: User) {
+    session.send('You said ' + session.message.text);
 }
