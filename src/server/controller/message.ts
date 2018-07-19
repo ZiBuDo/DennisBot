@@ -10,7 +10,7 @@ export default async function message(session: any) {
     // if a command then go to command flow
     // if not a command then determine if we are triggered
     // if triggered then go to trigger + action flow
-    console.log(JSON.stringify(session));
+    console.log(JSON.stringify(session.message.user));
     const userRepo = getEntityManager().getRepository(User);
 
     // // see if we can find user
