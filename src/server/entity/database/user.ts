@@ -6,6 +6,6 @@ export class User {
     @PrimaryColumn('string', {unique: true, nullable: false})
     name: String;
 
-    @Column('string', {unique: true, nullable: false})
+    @Column('string', {nullable: false})
     source: String;
 }

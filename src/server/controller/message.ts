@@ -1,5 +1,6 @@
 import {getEntityManager} from 'typeorm';
 import {User} from '../entity/database/user';
+import {getExisting, create} from '../services/database/user.service';
 
 /**
  * Message Endpoint
@@ -10,16 +11,18 @@ export default async function message(session: any) {
     // if a command then go to command flow
     // if not a command then determine if we are triggered
     // if triggered then go to trigger + action flow
-    const userRepo = getEntityManager().getRepository(User);
 
+    const userConfig = {
+        source: session.message.user.id,
+        name: session.message.user.name
+    };
+    let user = await getExisting(userConfig);
     // see if we can find user
-    const user = await userRepo.findOne({source: session.message.user.id});
     if (!user) {
         // need to register: ask for name
-        let newUser = userRepo.create({name: session.message.user.name, source: session.message.user.id});
-        getEntityManager().persist(newUser);
-        session.send('Nice to meet you ' + session.message.user.name);
-        flow(session, newUser);
+        user = await create(userConfig);
+        session.send('Nice to meet you ' + user.name);
+        flow(session, user);
     }else {
         // parse into command or trigger if neither do nothing
         flow(session, user);
@@ -28,5 +31,8 @@ export default async function message(session: any) {
 
 
 function flow(session: any, user: User) {
+    // if text has @Dennis Schaller then parse it out
+
     session.send('You said ' + session.message.text);
 }
+
