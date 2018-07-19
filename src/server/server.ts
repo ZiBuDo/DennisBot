@@ -3,7 +3,7 @@ import { createConnection } from 'typeorm';
 // import { Request, Response } from 'express';
 // import * as express from 'express';
 // import * as bodyParser from 'body-parser';
-import message from './server/controller/message';
+import message from './controller/message';
 // import call from './server/controller/call';
 import * as fs from 'fs';
 import * as path from 'path';
